@@ -10,11 +10,14 @@ const DEFAULT_LINE_CAP = "round";
 const DEFAULT_CANVAS_SIZE = 450;
 
 interface IProps {
+  setCanvas?: React.Dispatch<
+    React.SetStateAction<HTMLCanvasElement | undefined>
+  >;
   width?: number;
   height?: number;
 }
 
-export const Canvas: React.FC<IProps> = ({ width, height }) => {
+export const Canvas: React.FC<IProps> = ({ width, height, setCanvas }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | undefined>(undefined);
   const canvasRectRef = useRef<ClientRect | DOMRect | null>(null);
@@ -26,8 +29,11 @@ export const Canvas: React.FC<IProps> = ({ width, height }) => {
     if (!canvasRef.current) {
       return;
     }
+    if (setCanvas) {
+      setCanvas(canvasRef.current);
+    }
     canvasRectRef.current = canvasRef.current.getBoundingClientRect();
-  }, [canvasRef]);
+  }, [canvasRef, setCanvas]);
 
   useEffect(() => {
     if (!canvasRef.current) {
