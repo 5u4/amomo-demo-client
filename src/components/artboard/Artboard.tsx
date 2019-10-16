@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Canvas } from "./Canvas";
+import React, { useRef } from "react";
+import { Canvas, CanvasHandles } from "./Canvas";
 import { DownloadButton } from "./DownloadButton";
 
 export const Artboard: React.FC = () => {
-  const [canvas, setCanvas] = useState<HTMLCanvasElement>();
+  const canvasRef = useRef<CanvasHandles>(null);
 
   return (
     <>
-      <Canvas setCanvas={setCanvas} />
-      <DownloadButton canvas={canvas} />
+      <Canvas ref={canvasRef} />
+      <DownloadButton canvasRef={canvasRef} />
     </>
   );
 };
