@@ -1,20 +1,15 @@
 import React from "react";
+import { CanvasHandles } from "./Canvas";
 
 interface IProps {
-  canvas: HTMLCanvasElement | undefined;
+  canvasRef: React.RefObject<CanvasHandles>;
 }
 
-export const DownloadButton: React.FC<IProps> = ({ canvas }) => {
+export const DownloadButton: React.FC<IProps> = ({ canvasRef }) => {
   const download = () => {
-    if (!canvas) {
-      return;
+    if (canvasRef.current) {
+      canvasRef.current.download();
     }
-
-    const link = document.createElement("a");
-    link.download = "artboard.png"; // TODO: Use dynamic name
-    link.href = canvas.toDataURL();
-    link.click();
   };
-
   return <button onClick={download}>Download</button>;
 };
