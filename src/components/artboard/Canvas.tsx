@@ -1,19 +1,16 @@
 import React, {
+  Dispatch,
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
   useRef,
-  useState,
 } from "react";
+import { useDispatch } from "react-redux";
+import { IAction } from "../../hooks/createImmerReducer";
 import { useEventListener } from "../../hooks/useEventListener";
-import { useImmer } from "../../hooks/useImmer";
-
-interface IPoint {
-  x: number;
-  y: number;
-  mode: "begin" | "drawing" | "end";
-}
+import { ArtboardAction, IArtboardPayload } from "../../store/artboard/types";
 
 interface IProps {
   width?: number;
@@ -28,35 +25,17 @@ const DEFAULT_LINE_WIDTH = 10;
 const DEFAULT_LINE_CAP = "round";
 const DEFAULT_CANVAS_SIZE = 450;
 
-const stroke = (x: number, y: number, ctx?: CanvasRenderingContext2D) => {
-  if (!ctx) {
-    return;
-  }
-
-  ctx.lineTo(x, y);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-};
-
-const getMouseXY = (e: MouseEvent, canvasRect: ClientRect | DOMRect) => {
-  return {
-    x: e.clientX - canvasRect.left,
-    y: e.clientY - canvasRect.top,
-  };
-};
-
 const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
   { width, height },
   ref
 ) => {
-  const [drawing, setDrawing] = useState(false);
-  // eslint-disable-next-line
-  const [points, updatePoints] = useImmer<IPoint[]>([]);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | undefined>();
   const canvasRectRef = useRef<ClientRect | DOMRect | null>(null);
+
+  const dispatch = useDispatch<
+    Dispatch<IAction<ArtboardAction, IArtboardPayload>>
+  >();
 
   /** Update canvas rect ref */
   useLayoutEffect(() => {
@@ -80,44 +59,31 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
   }, [canvasRef]);
 
   /** Drawing functions */
-  const draw = (e: MouseEvent) => {
-    if (!drawing || !canvasRectRef.current || !ctxRef.current) {
-      return;
-    }
+  const makePayload = useCallback(
+    (e: MouseEvent): IArtboardPayload => ({
+      x: e.clientX - canvasRectRef.current!.left,
+      y: e.clientY - canvasRectRef.current!.top,
+      ctx: ctxRef.current,
+    }),
+    [ctxRef]
+  );
 
-    const { x, y } = getMouseXY(e, canvasRectRef.current);
-    stroke(x, y, ctxRef.current);
-    updatePoints(d => {
-      d.push({ x, y, mode: "drawing" });
-    });
-  };
+  const draw = useCallback(
+    (e: MouseEvent) => dispatch({ type: "DRAW", payload: makePayload(e) }),
+    [dispatch, makePayload]
+  );
 
-  const startDrawing = (e: MouseEvent) => {
-    if (!canvasRectRef.current) {
-      return;
-    }
+  const startDrawing = useCallback(
+    (e: MouseEvent) =>
+      dispatch({ type: "START_DRAWING", payload: makePayload(e) }),
+    [dispatch, makePayload]
+  );
 
-    const { x, y } = getMouseXY(e, canvasRectRef.current);
-    setDrawing(true);
-    updatePoints(d => {
-      d.push({ x, y, mode: "begin" });
-    });
-
-    draw(e);
-  };
-
-  const stopDrawing = (e: MouseEvent) => {
-    if (!ctxRef.current || !canvasRectRef.current) {
-      return;
-    }
-
-    const { x, y } = getMouseXY(e, canvasRectRef.current);
-    setDrawing(false);
-    ctxRef.current.beginPath();
-    updatePoints(d => {
-      d.push({ x, y, mode: "end" });
-    });
-  };
+  const stopDrawing = useCallback(
+    (e: MouseEvent) =>
+      dispatch({ type: "STOP_DRAWING", payload: makePayload(e) }),
+    [dispatch, makePayload]
+  );
 
   /** Register drawing events */
   useEventListener(canvasRef, "mousedown", startDrawing);
