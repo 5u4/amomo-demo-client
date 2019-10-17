@@ -19,6 +19,7 @@ interface IProps {
 
 export interface CanvasHandles {
   download: () => void;
+  undo: () => void;
 }
 
 const DEFAULT_LINE_WIDTH = 10;
@@ -59,30 +60,36 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
   }, [canvasRef]);
 
   /** Drawing functions */
-  const makePayload = useCallback(
-    (e: MouseEvent): IArtboardPayload => ({
-      x: e.clientX - canvasRectRef.current!.left,
-      y: e.clientY - canvasRectRef.current!.top,
-      ctx: ctxRef.current,
-    }),
+  const makeDrawingPayload = useCallback(
+    (e: MouseEvent): IArtboardPayload => {
+      if (!canvasRectRef.current) {
+        return {};
+      }
+
+      const x = e.clientX - canvasRectRef.current.left;
+      const y = e.clientY - canvasRectRef.current.top;
+
+      return { x, y, ctx: ctxRef.current };
+    },
     [ctxRef]
   );
 
   const draw = useCallback(
-    (e: MouseEvent) => dispatch({ type: "DRAW", payload: makePayload(e) }),
-    [dispatch, makePayload]
+    (e: MouseEvent) =>
+      dispatch({ type: "DRAW", payload: makeDrawingPayload(e) }),
+    [dispatch, makeDrawingPayload]
   );
 
   const startDrawing = useCallback(
     (e: MouseEvent) =>
-      dispatch({ type: "START_DRAWING", payload: makePayload(e) }),
-    [dispatch, makePayload]
+      dispatch({ type: "START_DRAWING", payload: makeDrawingPayload(e) }),
+    [dispatch, makeDrawingPayload]
   );
 
   const stopDrawing = useCallback(
     (e: MouseEvent) =>
-      dispatch({ type: "STOP_DRAWING", payload: makePayload(e) }),
-    [dispatch, makePayload]
+      dispatch({ type: "STOP_DRAWING", payload: makeDrawingPayload(e) }),
+    [dispatch, makeDrawingPayload]
   );
 
   /** Register drawing events */
@@ -103,13 +110,19 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     link.click();
   };
 
+  const undo = useCallback(
+    () => dispatch({ type: "UNDO", payload: { ctx: ctxRef.current } }),
+    [dispatch]
+  );
+
   /** Handle imperative functions */
   useImperativeHandle(
     ref,
     () => ({
       download,
+      undo,
     }),
-    []
+    [undo]
   );
 
   return (
