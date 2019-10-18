@@ -14,11 +14,11 @@ export interface IArtboardState {
 
 export interface IArtboardPayload {
   ctx?: CanvasRenderingContext2D;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 }
 
-export type ArtboardAction = "START_DRAWING" | "DRAW" | "STOP_DRAWING";
+export type ArtboardAction = "START_DRAWING" | "DRAW" | "STOP_DRAWING" | "UNDO";
 
 export type ActionFunction = (
   d: Draft<IArtboardState>,
