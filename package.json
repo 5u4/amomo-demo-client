@@ -8,13 +8,17 @@
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "@types/react-redux": "^7.1.4",
+    "@types/yup": "^0.26.24",
+    "axios": "^0.19.0",
+    "formik": "^1.5.8",
     "immer": "^4.0.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "develop": "react-scripts start",
