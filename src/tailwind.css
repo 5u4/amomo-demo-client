@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.piece {
+  @apply absolute inset-0 select-none;
+}
