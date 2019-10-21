@@ -5,6 +5,7 @@ interface IProps {
   size: number;
   select?: number;
   zIndex?: number;
+  block?: boolean;
 }
 
 export type IPieceType = "layout" | "body" | "mouth" | "eyes";
@@ -12,12 +13,18 @@ export type IPieceType = "layout" | "body" | "mouth" | "eyes";
 const DEAFULT_SELECTION = 0;
 const DEFAULT_ZINDEX = 0;
 
-export const Piece: React.FC<IProps> = ({ type, select, size, zIndex }) => {
+export const Piece: React.FC<IProps> = ({
+  type,
+  select,
+  size,
+  zIndex,
+  block,
+}) => {
   const src = `/avatars/${type}/${select || DEAFULT_SELECTION}.png`;
 
   return (
     <img
-      className="piece"
+      className={block ? "block-piece" : "absolute-piece"}
       src={src}
       alt="Avatar Piece"
       height={size}

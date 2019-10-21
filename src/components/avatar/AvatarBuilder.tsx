@@ -1,10 +1,22 @@
 import React from "react";
+import { useAvatarSelector } from "../../store/avatar";
 import { Avatar } from "./Avatar";
+import { AvatarSelect } from "./AvatarSelect";
 
 export const AvatarBuilder: React.FC = () => {
+  const avatar = useAvatarSelector();
+
   return (
-    <>
-      <Avatar body={0} layout={0} mouth={0} eyes={0} />
-    </>
+    <div>
+      <Avatar
+        body={avatar.body}
+        layout={avatar.layout}
+        mouth={avatar.mouth}
+        eyes={avatar.eyes}
+      />
+      <AvatarSelect piece="body" />
+      <AvatarSelect piece="mouth" />
+      <AvatarSelect piece="eyes" />
+    </div>
   );
 };
