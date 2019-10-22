@@ -20,6 +20,7 @@ interface IProps {
 export interface CanvasHandles {
   download: () => void;
   undo: () => void;
+  clear: () => void;
 }
 
 const DEFAULT_LINE_WIDTH = 10;
@@ -115,14 +116,20 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     [dispatch]
   );
 
+  const clear = useCallback(
+    () => dispatch({ type: "CLEAR", payload: { ctx: ctxRef.current } }),
+    [dispatch]
+  );
+
   /** Handle imperative functions */
   useImperativeHandle(
     ref,
     () => ({
       download,
       undo,
+      clear,
     }),
-    [undo]
+    [undo, clear]
   );
 
   return (

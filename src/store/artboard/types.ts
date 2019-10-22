@@ -18,7 +18,12 @@ export interface IArtboardPayload {
   y?: number;
 }
 
-export type ArtboardAction = "START_DRAWING" | "DRAW" | "STOP_DRAWING" | "UNDO";
+export type ArtboardAction =
+  | "START_DRAWING"
+  | "DRAW"
+  | "STOP_DRAWING"
+  | "UNDO"
+  | "CLEAR";
 
 export type ActionFunction = (
   d: Draft<IArtboardState>,

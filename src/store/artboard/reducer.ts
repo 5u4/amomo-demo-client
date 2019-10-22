@@ -66,9 +66,20 @@ const undo: ActionFunction = (draft, payload) => {
   redraw(draft, payload);
 };
 
+const clear: ActionFunction = (draft, { ctx }) => {
+  if (!ctx) {
+    return;
+  }
+
+  draft.points = [];
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+};
+
 export const artboardCases: ArtboardCases = {
   DRAW: draw,
   START_DRAWING: startDrawing,
   STOP_DRAWING: stopDrawing,
   UNDO: undo,
+  CLEAR: clear,
 };
