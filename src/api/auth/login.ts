@@ -13,5 +13,9 @@ interface IResponse {
 }
 
 export const loginApi = (payload: IRequest) => {
-  return server.post<IRequest, AxiosResponse<IResponse>>("auth/login", payload);
+  return server.post<IRequest, AxiosResponse<IResponse>>(
+    "auth/login",
+    payload,
+    { withCredentials: true }
+  );
 };

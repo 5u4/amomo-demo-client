@@ -18,6 +18,7 @@ interface IResponse {
 export const registerApi = (payload: IRequest) => {
   return server.post<IRequest, AxiosResponse<IResponse>>(
     "auth/register",
-    payload
+    payload,
+    { withCredentials: true }
   );
 };
