@@ -56,6 +56,13 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     if (!ctxRef.current) {
       return;
     }
+    ctxRef.current.fillStyle = "white";
+    ctxRef.current.fillRect(
+      0,
+      0,
+      canvasRef.current.width,
+      canvasRef.current.height
+    );
     ctxRef.current.lineWidth = DEFAULT_LINE_WIDTH;
     ctxRef.current.lineCap = DEFAULT_LINE_CAP;
   }, [canvasRef]);
@@ -106,8 +113,8 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     }
 
     const link = document.createElement("a");
-    link.download = "artboard.png"; // TODO: Use dynamic name
-    link.href = canvasRef.current.toDataURL();
+    link.download = "artboard.jpg"; // TODO: Use dynamic name
+    link.href = canvasRef.current.toDataURL("image/jpeg");
     link.click();
   };
 
