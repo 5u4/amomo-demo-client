@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.absolute-piece {
+  @apply absolute inset-0 select-none;
+}
+
+.block-piece {
+  @apply inline-block mx-3 align-middle;
+}
