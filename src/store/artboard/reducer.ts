@@ -39,7 +39,8 @@ const redraw: ActionFunction = (draft, { ctx }) => {
     return;
   }
 
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   for (const point of draft.points) {
     if (point.mode === "end") {
       ctx.beginPath();
