@@ -1,18 +1,21 @@
+import { useQuery } from "@apollo/react-hooks";
 import React, { useEffect } from "react";
-import { meApi } from "../../api/auth/me";
+import { ME_QUERY } from "../../graphql/auth";
 import { useAuthDispatch } from "../../store/auth";
 
 export const SetAccessToken: React.FC = () => {
   const dispatch = useAuthDispatch();
+  const { data } = useQuery(ME_QUERY);
 
   useEffect(() => {
-    meApi().then(res => {
-      const { id, username, email } = res.data.data;
-      const { token } = res.data;
-      dispatch({ type: "SET_USER", payload: { id, username, email } });
-      dispatch({ type: "SET_TOKEN", payload: { token } });
-    });
-  }, [dispatch]);
+    if (!data || !data.me) {
+      return;
+    }
+
+    const { id, email, username, token } = data.me;
+    dispatch({ type: "SET_USER", payload: { id, username, email } });
+    dispatch({ type: "SET_TOKEN", payload: { token } });
+  }, [data, dispatch]);
 
   return <></>;
 };

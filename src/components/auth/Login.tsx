@@ -1,7 +1,8 @@
+import { useMutation } from "@apollo/react-hooks";
 import { Field, Form, Formik } from "formik";
 import React, { useCallback } from "react";
 import * as yup from "yup";
-import { loginApi } from "../../api/auth/login";
+import { LOGIN_MUTATION } from "../../graphql/auth";
 import { useAuthDispatch } from "../../store/auth";
 import { password, username } from "../../validators/auth";
 import { TextFormField } from "../form/TextFormField";
@@ -18,22 +19,24 @@ interface IFormValue {
 
 export const Login: React.FC = () => {
   const dispatch = useAuthDispatch();
+  const [login] = useMutation(LOGIN_MUTATION);
 
-  const login = useCallback(
+  const onSubmit = useCallback(
     (values: IFormValue) => {
-      loginApi(values).then(res => {
-        const { id, username, email } = res.data.data;
-        const { token } = res.data;
-        dispatch({ type: "SET_USER", payload: { id, username, email } });
-        dispatch({ type: "SET_TOKEN", payload: { token } });
-      });
+      login({ variables: values })
+        .then(res => {
+          const { id, email, username, token } = res.data.login;
+          dispatch({ type: "SET_USER", payload: { id, username, email } });
+          dispatch({ type: "SET_TOKEN", payload: { token } });
+        })
+        .catch(err => {}); // TODO: Handle login failure
     },
-    [dispatch]
+    [login, dispatch]
   );
 
   return (
     <Formik
-      onSubmit={login}
+      onSubmit={onSubmit}
       initialValues={{ username: "", password: "" } as IFormValue}
       validationSchema={schema}
     >
