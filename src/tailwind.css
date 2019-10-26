@@ -3,20 +3,26 @@
 @tailwind utilities;
 
 html {
-  @apply h-screen w-screen bg-blue-100;
+  @apply bg-blue-100;
 }
 
 .posts-container {
-  @apply bg-gray-100 rounded-lg shadow-lg
-    m-6 px-1 py-6
-    flex flex-row flex-wrap justify-around;
+  @apply m-10 p-6;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 0.5em;
+  list-style: none;
 }
 
 .post-card {
-  @apply bg-white rounded-lg shadow-lg m-1 p-2;
+  @apply bg-white rounded-lg m-1 p-2 flex flex-row flex-wrap border-solid border-gray-200 border-4;
 }
 
-.absolute-piece {
+.post-card:hover {
+  @apply shadow-md;
+}
+
+.post-card .absolute-piece {
   @apply absolute inset-0 select-none;
 }
 

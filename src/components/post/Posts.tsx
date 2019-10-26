@@ -11,10 +11,12 @@ export const Posts: React.FC = () => {
   }
 
   return (
-    <div className="posts-container">
+    <ul className="posts-container">
       {data.posts.map((post: any) => (
-        <Post key={post.id} dataUrl={post.dataUrl} />
+        <li>
+          <Post key={post.id} dataUrl={post.dataUrl} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
