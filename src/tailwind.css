@@ -16,7 +16,7 @@ body {
 }
 
 .post-card {
-  @apply bg-white rounded-lg m-1 p-2 flex flex-row flex-wrap border-solid border-gray-200 border-4;
+  @apply bg-white rounded-lg m-1 p-0 flex flex-row flex-wrap border-solid border-gray-200 border-4;
 }
 
 .menu-avatar {
@@ -24,6 +24,30 @@ body {
   width: 56px;
   height: 56px;
   z-index: 30;
+}
+
+/* Posts description section */
+
+.round-avatar {
+  @apply rounded-full border-solid border-gray-200 border-2 inline-block mr-3 relative;
+  width: 44px;
+  height: 44px;
+}
+
+.round-avatar:hover {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.username-display {
+  @apply text-gray-700;
+}
+
+.username-display:hover {
+  @apply text-gray-600;
+}
+
+.description-container {
+  @apply flex flex-row flex-wrap items-center;
 }
 
 .absolute-piece {

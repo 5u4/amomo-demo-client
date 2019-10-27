@@ -13,7 +13,7 @@ export const Posts: React.FC = () => {
     <ul className="posts-container">
       {data.posts.map(post => (
         <li key={post.id}>
-          <Post dataUrl={post.dataUrl} />
+          <Post dataUrl={post.dataUrl} postedBy={post.postedBy} />
         </li>
       ))}
     </ul>

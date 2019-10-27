@@ -8,6 +8,21 @@ export type Scalars = {
   Float: number,
 };
 
+export type Avatar = {
+   __typename?: 'Avatar',
+  layout: Scalars['String'],
+  body: Scalars['String'],
+  mouth: Scalars['String'],
+  eyes: Scalars['String'],
+};
+
+export type AvatarInput = {
+  layout?: Maybe<Scalars['String']>,
+  body?: Maybe<Scalars['String']>,
+  mouth?: Maybe<Scalars['String']>,
+  eyes?: Maybe<Scalars['String']>,
+};
+
 export type CreatePostInput = {
   data: Scalars['String'],
 };
@@ -26,6 +41,7 @@ export type Mutation = {
 
 
 export type MutationRegisterArgs = {
+  avatar?: Maybe<AvatarInput>,
   payload: RegisterInput
 };
 
@@ -75,6 +91,7 @@ export type User = {
   id: Scalars['ID'],
   username: Scalars['String'],
   email: Scalars['String'],
+  avatar: Avatar,
   token?: Maybe<Scalars['String']>,
   createdAt: Scalars['Int'],
   updatedAt: Scalars['Int'],

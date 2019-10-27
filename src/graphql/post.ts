@@ -8,8 +8,13 @@ const POSTS_QUERY = gql`
       id
       dataUrl
       postedBy {
-        id
         username
+        avatar {
+          layout
+          body
+          mouth
+          eyes
+        }
       }
       createdAt
     }
