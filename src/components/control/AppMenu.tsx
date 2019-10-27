@@ -1,11 +1,14 @@
 import { Affix, Card, Dropdown, Menu } from "antd";
 import React from "react";
+import { Login } from "../auth/Login";
 import { Avatar } from "../avatar/Avatar";
 
 export const AppMenu: React.FC = () => {
   const menu = (
     <Menu>
-      <Menu.Item>Login</Menu.Item>
+      <Menu.Item>
+        <Login />
+      </Menu.Item>
       <Menu.Item>Register</Menu.Item>
     </Menu>
   );

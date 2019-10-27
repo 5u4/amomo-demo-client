@@ -2,7 +2,7 @@ import { Alert, Input } from "antd";
 import { FieldProps, getIn } from "formik";
 import React from "react";
 
-export const TextFormField: React.FC<FieldProps> = ({
+export const PasswordFormField: React.FC<FieldProps> = ({
   field,
   form,
   ...props
@@ -12,7 +12,7 @@ export const TextFormField: React.FC<FieldProps> = ({
 
   return (
     <>
-      <Input {...field} {...props} />
+      <Input.Password {...field} {...props} />
       {!!errorText && (
         <Alert type="error" message={errorText} showIcon {...props} />
       )}
