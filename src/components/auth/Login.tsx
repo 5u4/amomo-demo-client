@@ -1,8 +1,7 @@
-import { useMutation } from "@apollo/react-hooks";
 import { Field, Form, Formik } from "formik";
 import React, { useCallback } from "react";
 import * as yup from "yup";
-import { LOGIN_MUTATION } from "../../graphql/auth";
+import { useLoginMutation } from "../../graphql/auth";
 import { useAuthDispatch } from "../../store/auth";
 import { password, username } from "../../validators/auth";
 import { TextFormField } from "../form/TextFormField";
@@ -19,15 +18,19 @@ interface IFormValue {
 
 export const Login: React.FC = () => {
   const dispatch = useAuthDispatch();
-  const [login] = useMutation(LOGIN_MUTATION);
+  const [login] = useLoginMutation();
 
   const onSubmit = useCallback(
     (values: IFormValue) => {
-      login({ variables: values })
+      login({ variables: { payload: values } })
         .then(res => {
+          if (!res.data || !res.data.login) {
+            return;
+          }
+
           const { id, email, username, token } = res.data.login;
           dispatch({ type: "SET_USER", payload: { id, username, email } });
-          dispatch({ type: "SET_TOKEN", payload: { token } });
+          token && dispatch({ type: "SET_TOKEN", payload: { token } });
         })
         .catch(err => {}); // TODO: Handle login failure
     },

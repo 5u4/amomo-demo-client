@@ -1,14 +1,13 @@
-import { useQuery } from "@apollo/react-hooks";
 import React, { useEffect } from "react";
-import { ME_QUERY } from "../../graphql/auth";
+import { useMeQuery } from "../../graphql/auth";
 import { useAuthDispatch } from "../../store/auth";
 
 export const SetAccessToken: React.FC = () => {
   const dispatch = useAuthDispatch();
-  const { data } = useQuery(ME_QUERY);
+  const { data } = useMeQuery();
 
   useEffect(() => {
-    if (!data || !data.me) {
+    if (!data || !data.me || !data.me.token) {
       return;
     }
 

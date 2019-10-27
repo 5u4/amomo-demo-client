@@ -1,8 +1,10 @@
+import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { Query, QueryPostsArgs } from "./types";
 
-export const POSTS_QUERY = gql`
-  query($limit: Int, $offset: Int) {
-    posts(pagination: { limit: $limit, offset: $offset }) {
+const POSTS_QUERY = gql`
+  query($pagination: PaginationInput) {
+    posts(pagination: $pagination) {
       id
       dataUrl
       postedBy {
@@ -13,3 +15,6 @@ export const POSTS_QUERY = gql`
     }
   }
 `;
+
+export const usePostsQuery = (variables?: QueryPostsArgs) =>
+  useQuery<Query, QueryPostsArgs>(POSTS_QUERY, { variables });

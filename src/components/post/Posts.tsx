@@ -1,10 +1,9 @@
-import { useQuery } from "@apollo/react-hooks";
 import React from "react";
-import { POSTS_QUERY } from "../../graphql/post";
+import { usePostsQuery } from "../../graphql/post";
 import { Post } from "./Post";
 
 export const Posts: React.FC = () => {
-  const { data } = useQuery(POSTS_QUERY);
+  const { data } = usePostsQuery();
 
   if (!data) {
     return <></>;
@@ -12,9 +11,9 @@ export const Posts: React.FC = () => {
 
   return (
     <ul className="posts-container">
-      {data.posts.map((post: any) => (
-        <li>
-          <Post key={post.id} dataUrl={post.dataUrl} />
+      {data.posts.map(post => (
+        <li key={post.id}>
+          <Post dataUrl={post.dataUrl} />
         </li>
       ))}
     </ul>
