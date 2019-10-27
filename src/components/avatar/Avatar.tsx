@@ -4,10 +4,10 @@ import { Piece } from "./Piece";
 interface IProps {
   size?: number;
   offset?: number;
-  layout: number;
-  body: number;
-  mouth: number;
-  eyes: number;
+  layout: string;
+  body: string;
+  mouth: string;
+  eyes: string;
 }
 
 const DEFAULT_SIZE = 48;

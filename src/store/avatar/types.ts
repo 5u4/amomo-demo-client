@@ -3,18 +3,18 @@ import { IPieceType } from "../../components/avatar/Piece";
 import { Cases } from "../../hooks/createImmerReducer";
 
 export interface IAvatarState {
-  layout: number;
-  body: number;
-  mouth: number;
-  eyes: number;
+  layout: string;
+  body: string;
+  mouth: string;
+  eyes: string;
 }
 
 export interface IAvatarPayload {
   piece?: IPieceType;
-  amount?: number;
+  select?: string;
 }
 
-export type AvatarAction = "MOVE_PIECE";
+export type AvatarAction = "SET_PIECE";
 
 export type ActionFunction = (
   d: Draft<IAvatarState>,

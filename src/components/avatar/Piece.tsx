@@ -4,7 +4,7 @@ interface IProps {
   type: IPieceType;
   size: number;
   offset?: number;
-  select?: number;
+  select?: string;
   zIndex?: number;
   block?: boolean;
 }
