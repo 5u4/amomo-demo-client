@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  @apply w-auto h-auto;
+}
+
 .posts-container {
   @apply m-10 p-6;
   display: grid;
@@ -14,7 +19,14 @@
   @apply bg-white rounded-lg m-1 p-2 flex flex-row flex-wrap border-solid border-gray-200 border-4;
 }
 
-.post-card .absolute-piece {
+.menu-avatar {
+  @apply rounded border-solid border-gray-400 border-4;
+  width: 56px;
+  height: 56px;
+  z-index: 30;
+}
+
+.absolute-piece {
   @apply absolute inset-0 select-none;
 }
 

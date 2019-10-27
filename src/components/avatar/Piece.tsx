@@ -3,6 +3,7 @@ import React from "react";
 interface IProps {
   type: IPieceType;
   size: number;
+  offset?: number;
   select?: number;
   zIndex?: number;
   block?: boolean;
@@ -17,6 +18,7 @@ export const Piece: React.FC<IProps> = ({
   type,
   select,
   size,
+  offset,
   zIndex,
   block,
 }) => {
@@ -29,7 +31,11 @@ export const Piece: React.FC<IProps> = ({
       alt="Avatar Piece"
       height={size}
       width={size}
-      style={{ zIndex: zIndex || DEFAULT_ZINDEX }}
+      style={{
+        zIndex: zIndex || DEFAULT_ZINDEX,
+        top: offset || 0,
+        left: offset || 0,
+      }}
       draggable={false}
     />
   );
