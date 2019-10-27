@@ -2,24 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply bg-blue-100;
-}
-
 .posts-container {
   @apply m-10 p-6;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   grid-gap: 0.5em;
   list-style: none;
 }
 
 .post-card {
   @apply bg-white rounded-lg m-1 p-2 flex flex-row flex-wrap border-solid border-gray-200 border-4;
-}
-
-.post-card:hover {
-  @apply shadow-md;
 }
 
 .post-card .absolute-piece {

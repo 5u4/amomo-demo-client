@@ -1,3 +1,4 @@
+import { Card } from "antd";
 import React from "react";
 
 interface IProps {
@@ -6,12 +7,16 @@ interface IProps {
 
 export const Post: React.FC<IProps> = ({ dataUrl }) => {
   return (
-    <div className="post-card">
-      <img
-        src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
-        alt="Post"
-        draggable={false}
-      />
-    </div>
+    <Card
+      className="post-card"
+      hoverable
+      cover={
+        <img
+          src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
+          alt="Post"
+          draggable={false}
+        />
+      }
+    ></Card>
   );
 };
