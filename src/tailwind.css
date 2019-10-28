@@ -20,10 +20,19 @@ body {
 }
 
 .menu-avatar {
-  @apply rounded border-solid border-gray-400 border-4;
+  @apply bg-gray-300 border-solid border-blue-300 border-4 relative;
+  border-radius: 20px;
   width: 56px;
   height: 56px;
   z-index: 30;
+}
+
+.menu-avatar:hover {
+  @apply border-blue-500 shadow-md cursor-pointer;
+}
+
+.menu-dropdown {
+  @apply text-base text-gray-700 m-2 antialiased font-light;
 }
 
 /* Posts description section */

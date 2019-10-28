@@ -88,7 +88,9 @@ export const Login: React.FC = () => {
 
   return (
     <>
-      <div onClick={() => setModalVisibility(true)}>Login</div>
+      <div className="menu-dropdown" onClick={() => setModalVisibility(true)}>
+        Login
+      </div>
       <Modal
         closable={false}
         footer={null}

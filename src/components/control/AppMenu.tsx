@@ -1,4 +1,4 @@
-import { Affix, Card, Dropdown, Menu } from "antd";
+import { Affix, Dropdown, Menu } from "antd";
 import React from "react";
 import { Login } from "../auth/Login";
 import { Register } from "../auth/Register";
@@ -17,11 +17,11 @@ export const AppMenu: React.FC = () => {
   );
 
   return (
-    <Affix offsetTop={20} style={{ position: "absolute", left: 20 }}>
-      <Dropdown overlay={menu} placement="topLeft">
-        <Card className="menu-avatar" hoverable>
+    <Affix offsetTop={15} style={{ position: "absolute", right: 20 }}>
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <div className="menu-avatar">
           <Anonymous />
-        </Card>
+        </div>
       </Dropdown>
     </Affix>
   );

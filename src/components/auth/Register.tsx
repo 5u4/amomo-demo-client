@@ -102,7 +102,9 @@ export const Register: React.FC = () => {
 
   return (
     <>
-      <div onClick={() => setModalVisibility(true)}>Register</div>
+      <div className="menu-dropdown" onClick={() => setModalVisibility(true)}>
+        Register
+      </div>
       <Modal
         closable={false}
         footer={null}
