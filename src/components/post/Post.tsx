@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useAnswerMutation } from "../../graphql/post";
 import { User } from "../../graphql/types";
 import { usePostGuessState } from "../../hooks/usePostGuessState";
+import { useAuthSelector } from "../../store/auth";
 import { markPostGuessState } from "../../store/storage/postState";
 import { guess } from "../../validators/post";
 import { Anonymous } from "../avatar/Anonymous";
@@ -28,6 +29,7 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
   const [modalVisible, setModalVisibility] = useState(false);
   const [guessState, setGuessState] = usePostGuessState(id, solved);
   const [answer] = useAnswerMutation();
+  const auth = useAuthSelector();
 
   const avatar = (
     <div className="round-avatar">
@@ -76,7 +78,7 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
         }
         message.success(`You got ${guess} right! 🎉`);
         setGuessState("correct");
-        markPostGuessState(id, guess); // TODO: Put storage only on guest mode
+        auth.token || markPostGuessState(id, guess);
       })
       .catch(() => {});
   };
