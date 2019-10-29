@@ -7,8 +7,12 @@ body {
   @apply w-auto h-auto;
 }
 
+img {
+  @apply select-none;
+}
+
 .posts-container {
-  @apply m-10 p-6;
+  @apply m-0 p-0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
   grid-gap: 0.5em;
@@ -19,9 +23,12 @@ body {
   @apply bg-white rounded-lg m-1 p-0 flex flex-row flex-wrap border-solid border-gray-200 border-4;
 }
 
+.post-modal {
+  @apply bg-white rounded-lg p-0 border-solid border-gray-200 border-4;
+}
+
 .menu-avatar {
-  @apply bg-gray-300 border-solid border-blue-300 border-4 relative;
-  border-radius: 20px;
+  @apply bg-white rounded-lg border-solid border-blue-300 border-4 relative;
   width: 56px;
   height: 56px;
   z-index: 30;
@@ -65,4 +72,10 @@ body {
 
 .block-piece {
   @apply inline-block mx-3 align-middle;
+}
+
+@screen sm {
+  .posts-container {
+    @apply m-10 p-6;
+  }
 }

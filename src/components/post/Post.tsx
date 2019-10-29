@@ -1,8 +1,9 @@
-import { Card, Typography } from "antd";
-import React from "react";
+import { Card, Modal, Typography } from "antd";
+import React, { useState } from "react";
 import { User } from "../../graphql/types";
 import { Anonymous } from "../avatar/Anonymous";
 import { Avatar } from "../avatar/Avatar";
+import { PostCard } from "./PostCard";
 
 interface IProps {
   dataUrl: string;
@@ -10,6 +11,8 @@ interface IProps {
 }
 
 export const Post: React.FC<IProps> = ({ dataUrl, postedBy }) => {
+  const [modalVisible, setModalVisibility] = useState(false);
+
   const avatar = (
     <div className="round-avatar">
       {postedBy ? (
@@ -34,22 +37,34 @@ export const Post: React.FC<IProps> = ({ dataUrl, postedBy }) => {
   );
 
   return (
-    <Card
-      className="post-card"
-      hoverable
-      bodyStyle={{ padding: 16 }}
-      cover={
-        <img
-          src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
-          alt="Post"
-          draggable={false}
-        />
-      }
-    >
-      <div className="description-container">
-        {avatar}
-        {text}
-      </div>
-    </Card>
+    <>
+      <Card
+        className="post-card"
+        hoverable
+        bodyStyle={{ padding: 16 }}
+        onClick={() => setModalVisibility(true)}
+        cover={
+          <img
+            src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
+            alt="Post"
+            draggable={false}
+          />
+        }
+      >
+        <div className="description-container">
+          {avatar}
+          {text}
+        </div>
+      </Card>
+      <Modal
+        visible={modalVisible}
+        closable={false}
+        footer={null}
+        className="post-modal"
+        onCancel={() => setModalVisibility(false)}
+      >
+        <PostCard dataUrl={dataUrl} />
+      </Modal>
+    </>
   );
 };
