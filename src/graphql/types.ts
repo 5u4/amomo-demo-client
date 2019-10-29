@@ -8,6 +8,11 @@ export type Scalars = {
   Float: number,
 };
 
+export type AnswerInput = {
+  postId: Scalars['String'],
+  guessTopic: Scalars['String'],
+};
+
 export type Avatar = {
    __typename?: 'Avatar',
   layout: Scalars['String'],
@@ -25,6 +30,7 @@ export type AvatarInput = {
 
 export type CreatePostInput = {
   data: Scalars['String'],
+  topic: Scalars['String'],
 };
 
 export type LoginInput = {
@@ -37,6 +43,8 @@ export type Mutation = {
   register?: Maybe<User>,
   login?: Maybe<User>,
   createPost: Post,
+  answer: Scalars['Boolean'],
+  seed: Scalars['Boolean'],
 };
 
 
@@ -55,6 +63,11 @@ export type MutationCreatePostArgs = {
   input: CreatePostInput
 };
 
+
+export type MutationAnswerArgs = {
+  input: AnswerInput
+};
+
 export type PaginationInput = {
   offset?: Maybe<Scalars['Int']>,
   limit?: Maybe<Scalars['Int']>,
@@ -64,6 +77,7 @@ export type Post = {
    __typename?: 'Post',
   id: Scalars['ID'],
   createdAt: Scalars['Int'],
+  solved?: Maybe<Scalars['Boolean']>,
   dataUrl: Scalars['String'],
   postedBy?: Maybe<User>,
 };
@@ -91,8 +105,8 @@ export type User = {
   id: Scalars['ID'],
   username: Scalars['String'],
   email: Scalars['String'],
-  avatar: Avatar,
   token?: Maybe<Scalars['String']>,
   createdAt: Scalars['Int'],
   updatedAt: Scalars['Int'],
+  avatar: Avatar,
 };

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ant design adjusting */
+
+.anticon {
+  vertical-align: 0.125em;
+}
+
 html,
 body {
   @apply w-auto h-auto;
@@ -10,6 +16,8 @@ body {
 img {
   @apply select-none;
 }
+
+/* Post cards */
 
 .posts-container {
   @apply m-0 p-0;
@@ -25,6 +33,30 @@ img {
 
 .post-modal {
   @apply bg-white rounded-lg p-0 border-solid border-gray-200 border-4;
+}
+
+.post-card-correct {
+  @apply border-green-300;
+}
+
+.post-card-correct:hover {
+  @apply border-green-400;
+}
+
+.post-card-incorrect {
+  @apply border-red-300;
+}
+
+.post-card-incorrect:hover {
+  @apply border-red-400;
+}
+
+.post-modal-correct {
+  @apply border-green-300;
+}
+
+.post-modal-incorrect {
+  @apply border-red-300;
 }
 
 .menu-avatar {
