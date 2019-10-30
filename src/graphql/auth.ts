@@ -58,8 +58,15 @@ const REGISTER_MUTATION = gql`
   }
 `;
 
+const LOGOUT_MUTATION = gql`
+  mutation {
+    logout
+  }
+`;
+
 export const useMeQuery = () => useQuery<Query>(ME_QUERY);
 export const useLoginMutation = (variables?: MutationLoginArgs) =>
   useMutation<Mutation, MutationLoginArgs>(LOGIN_MUTATION, { variables });
 export const useRegisterMutation = (variables?: MutationRegisterArgs) =>
   useMutation<Mutation, MutationRegisterArgs>(REGISTER_MUTATION, { variables });
+export const useLogoutMutation = () => useMutation<Mutation>(LOGOUT_MUTATION);

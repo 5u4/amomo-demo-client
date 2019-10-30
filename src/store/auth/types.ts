@@ -18,7 +18,11 @@ export interface IAuthPayload {
   avatar?: IAvatarState;
 }
 
-export type AuthAction = "SET_USER" | "SET_TOKEN" | "SET_USER_AVATAR";
+export type AuthAction =
+  | "SET_USER"
+  | "SET_TOKEN"
+  | "SET_USER_AVATAR"
+  | "LOGOUT";
 
 export type ActionFunction = (
   d: Draft<IAuthState>,

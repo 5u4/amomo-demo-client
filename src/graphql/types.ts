@@ -42,6 +42,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   register?: Maybe<User>,
   login?: Maybe<User>,
+  logout: Scalars['Boolean'],
   createPost: Post,
   answer: Scalars['Boolean'],
   seed: Scalars['Boolean'],

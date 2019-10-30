@@ -2,9 +2,11 @@ import { Affix, Dropdown, Menu } from "antd";
 import React from "react";
 import { useAuthSelector } from "../../store/auth";
 import { Login } from "../auth/Login";
+import { Logout } from "../auth/Logout";
 import { Register } from "../auth/Register";
 import { Anonymous } from "../avatar/Anonymous";
 import { Avatar } from "../avatar/Avatar";
+import { Profile } from "../user/Profile";
 
 export const AppMenu: React.FC = () => {
   const auth = useAuthSelector();
@@ -21,7 +23,7 @@ export const AppMenu: React.FC = () => {
       <Anonymous />
     );
 
-  const menu = (
+  const guestMenu = (
     <Menu>
       <Menu.Item>
         <Login />
@@ -32,9 +34,20 @@ export const AppMenu: React.FC = () => {
     </Menu>
   );
 
+  const userMenu = (
+    <Menu>
+      <Menu.Item>
+        <Profile />
+      </Menu.Item>
+      <Menu.Item>
+        <Logout />
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Affix offsetTop={15} style={{ position: "absolute", right: 20 }}>
-      <Dropdown overlay={menu} trigger={["click"]}>
+      <Dropdown overlay={auth.token ? userMenu : guestMenu} trigger={["click"]}>
         <div className="menu-avatar">{menuAvatar}</div>
       </Dropdown>
     </Affix>

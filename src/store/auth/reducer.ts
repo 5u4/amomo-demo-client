@@ -25,8 +25,13 @@ const setUserAvatar: ActionFunction = (draft, { avatar }) => {
   draft.avatar = avatar;
 };
 
+const logout: ActionFunction = draft => {
+  draft = {};
+};
+
 export const authCases: AuthCases = {
   SET_USER: setUser,
   SET_TOKEN: setToken,
   SET_USER_AVATAR: setUserAvatar,
+  LOGOUT: logout,
 };
