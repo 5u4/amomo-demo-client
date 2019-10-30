@@ -33,6 +33,9 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
   const [guessState, setGuessState] = usePostGuessState(id, solution);
   const [answer] = useAnswerMutation();
   const auth = useAuthSelector();
+  const [guessSolution, setGuessSolution] = useState<string | undefined>(
+    undefined
+  );
 
   const avatar = (
     <div className="round-avatar">
@@ -82,6 +85,7 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
         message.success(`You got ${guess} right! 🎉`);
         setGuessState("correct");
         auth.token || markPostGuessState(id, guess);
+        setGuessSolution(guess);
       })
       .catch(() => {});
   };
@@ -163,8 +167,10 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
           {guessState === "correct" ? (
             <Alert
               message={`You got ${solution ||
+                guessSolution ||
                 getPostGuessState(id)} correctly!`}
               type="success"
+              showIcon
             />
           ) : (
             guessInputForm
