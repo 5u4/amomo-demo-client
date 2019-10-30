@@ -20,9 +20,10 @@ export const SetAccessToken: React.FC<IProps> = ({ setAuthCompeleted }) => {
       return;
     }
 
-    const { id, email, username, token } = data.me;
+    const { id, email, username, token, avatar } = data.me;
     dispatch({ type: "SET_USER", payload: { id, username, email } });
     dispatch({ type: "SET_TOKEN", payload: { token } });
+    dispatch({ type: "SET_USER_AVATAR", payload: { avatar } });
     setAuthCompeleted && setAuthCompeleted(true);
   }, [data, dispatch, setAuthCompeleted, loading, error]);
 

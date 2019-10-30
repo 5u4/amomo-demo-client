@@ -14,6 +14,12 @@ const ME_QUERY = gql`
       username
       email
       token
+      avatar {
+        layout
+        body
+        mouth
+        eyes
+      }
     }
   }
 `;
@@ -25,6 +31,12 @@ const LOGIN_MUTATION = gql`
       username
       email
       token
+      avatar {
+        layout
+        body
+        mouth
+        eyes
+      }
     }
   }
 `;
@@ -36,6 +48,12 @@ const REGISTER_MUTATION = gql`
       email
       username
       token
+      avatar {
+        layout
+        body
+        mouth
+        eyes
+      }
     }
   }
 `;

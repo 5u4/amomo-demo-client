@@ -21,7 +21,12 @@ const setToken: ActionFunction = (draft, payload) => {
   setAccessToken(payload.token);
 };
 
+const setUserAvatar: ActionFunction = (draft, { avatar }) => {
+  draft.avatar = avatar;
+};
+
 export const authCases: AuthCases = {
   SET_USER: setUser,
   SET_TOKEN: setToken,
+  SET_USER_AVATAR: setUserAvatar,
 };
