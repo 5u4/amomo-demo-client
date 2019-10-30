@@ -105,6 +105,7 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
             style={formInputStyle}
             suffix={guessIcon}
             component={TextFormField}
+            size="large"
           />
         </Form>
       )}
