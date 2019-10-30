@@ -87,6 +87,7 @@ export type Query = {
   me?: Maybe<User>,
   posts: Array<Post>,
   ping: Scalars['String'],
+  randomTopics: Array<Topic>,
 };
 
 
@@ -94,10 +95,25 @@ export type QueryPostsArgs = {
   pagination?: Maybe<PaginationInput>
 };
 
+
+export type QueryRandomTopicsArgs = {
+  input?: Maybe<RandomTopicInput>
+};
+
+export type RandomTopicInput = {
+  size?: Maybe<Scalars['Int']>,
+};
+
 export type RegisterInput = {
   username: Scalars['String'],
   email: Scalars['String'],
   password: Scalars['String'],
+};
+
+export type Topic = {
+   __typename?: 'Topic',
+  id: Scalars['ID'],
+  name: Scalars['String'],
 };
 
 export type User = {

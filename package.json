@@ -27,6 +27,7 @@
     "stylelint-config-recommended": "^3.0.0",
     "tailwindcss": "^1.1.2",
     "typescript": "3.6.4",
+    "wouter": "^2.3.1",
     "yup": "^0.27.0"
   },
   "scripts": {
