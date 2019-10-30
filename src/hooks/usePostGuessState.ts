@@ -5,14 +5,14 @@ type TPostGuessState = "untouched" | "correct" | "incorrect";
 
 const getInitialPostGuessState = (
   id: string,
-  solved?: boolean | null
+  answer?: string | null
 ): TPostGuessState => {
-  if (solved === null || solved === undefined) {
+  if (answer === null || answer === undefined) {
     return getPostGuessState(id) ? "correct" : "untouched";
   }
 
-  return solved ? "correct" : "untouched";
+  return answer ? "correct" : "untouched";
 };
 
-export const usePostGuessState = (id: string, solved?: boolean | null) =>
-  useState<TPostGuessState>(getInitialPostGuessState(id, solved));
+export const usePostGuessState = (id: string, answer?: string | null) =>
+  useState<TPostGuessState>(getInitialPostGuessState(id, answer));

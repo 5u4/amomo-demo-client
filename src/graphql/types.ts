@@ -77,7 +77,7 @@ export type Post = {
    __typename?: 'Post',
   id: Scalars['ID'],
   createdAt: Scalars['Int'],
-  solved?: Maybe<Scalars['Boolean']>,
+  answer?: Maybe<Scalars['String']>,
   dataUrl: Scalars['String'],
   postedBy?: Maybe<User>,
 };

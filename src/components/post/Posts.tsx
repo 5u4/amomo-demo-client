@@ -17,7 +17,7 @@ export const Posts: React.FC = () => {
             id={post.id}
             dataUrl={post.dataUrl}
             postedBy={post.postedBy}
-            solved={post.solved}
+            solution={post.answer}
           />
         </li>
       ))}

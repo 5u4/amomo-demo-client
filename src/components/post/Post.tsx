@@ -1,4 +1,4 @@
-import { Card, Icon, message, Modal, Typography } from "antd";
+import { Alert, Card, Icon, message, Modal, Typography } from "antd";
 import { Field, Form, Formik, FormikActions } from "formik";
 import React, { useState } from "react";
 import * as yup from "yup";
@@ -6,7 +6,10 @@ import { useAnswerMutation } from "../../graphql/post";
 import { User } from "../../graphql/types";
 import { usePostGuessState } from "../../hooks/usePostGuessState";
 import { useAuthSelector } from "../../store/auth";
-import { markPostGuessState } from "../../store/storage/postState";
+import {
+  getPostGuessState,
+  markPostGuessState,
+} from "../../store/storage/postState";
 import { guess } from "../../validators/post";
 import { Anonymous } from "../avatar/Anonymous";
 import { Avatar } from "../avatar/Avatar";
@@ -22,12 +25,12 @@ interface IProps {
   id: string;
   dataUrl: string;
   postedBy?: User | null;
-  solved?: boolean | null;
+  solution?: string | null;
 }
 
-export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
+export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
   const [modalVisible, setModalVisibility] = useState(false);
-  const [guessState, setGuessState] = usePostGuessState(id, solved);
+  const [guessState, setGuessState] = usePostGuessState(id, solution);
   const [answer] = useAnswerMutation();
   const auth = useAuthSelector();
 
@@ -83,7 +86,7 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
       .catch(() => {});
   };
 
-  const form = (
+  const guessInputForm = (
     <Formik
       onSubmit={onSubmit}
       initialValues={{ guess: "" } as IFormValue}
@@ -144,10 +147,11 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
         footer={null}
         className={modalClassName}
         onCancel={() => setModalVisibility(false)}
+        bodyStyle={{ padding: 12 }}
       >
         <Card
           bordered={false}
-          bodyStyle={{ padding: 16 }}
+          bodyStyle={{ padding: 12 }}
           cover={
             <img
               src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
@@ -156,7 +160,15 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solved }) => {
             />
           }
         >
-          {guessState === "correct" ? <></> : form}
+          {guessState === "correct" ? (
+            <Alert
+              message={`You got ${solution ||
+                getPostGuessState(id)} correctly!`}
+              type="success"
+            />
+          ) : (
+            guessInputForm
+          )}
         </Card>
       </Modal>
     </>

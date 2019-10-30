@@ -16,7 +16,7 @@ const POSTS_QUERY = gql`
           eyes
         }
       }
-      solved
+      answer
       createdAt
     }
   }
