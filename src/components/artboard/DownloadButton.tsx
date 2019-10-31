@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import React from "react";
 import { CanvasHandles } from "./Canvas";
 
@@ -13,11 +13,13 @@ export const DownloadButton: React.FC<IProps> = ({ canvasRef }) => {
     }
   };
   return (
-    <Button
-      className="tool-btn"
-      icon="cloud-download"
-      shape="circle"
-      onClick={download}
-    />
+    <Tooltip title="Download Drawing">
+      <Button
+        className="tool-btn"
+        icon="cloud-download"
+        shape="circle"
+        onClick={download}
+      />
+    </Tooltip>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Icon, Popconfirm } from "antd";
+import { Button, Icon, Popconfirm, Tooltip } from "antd";
 import React from "react";
 import { CanvasHandles } from "./Canvas";
 
@@ -15,7 +15,9 @@ export const ClearButton: React.FC<IProps> = ({ canvasRef }) => {
       okType="danger"
       okText="CLEAR"
     >
-      <Button className="tool-btn" icon="stop" shape="circle" />
+      <Tooltip title="Reset Canvas" placement="right">
+        <Button className="tool-btn" icon="stop" shape="circle" type="danger" />
+      </Tooltip>
     </Popconfirm>
   );
 };
