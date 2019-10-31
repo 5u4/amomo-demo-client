@@ -33,9 +33,10 @@ export const Login: React.FC = () => {
             return;
           }
 
-          const { id, email, username, token } = res.data.login;
+          const { id, email, username, token, avatar } = res.data.login;
           dispatch({ type: "SET_USER", payload: { id, username, email } });
           token && dispatch({ type: "SET_TOKEN", payload: { token } });
+          avatar && dispatch({ type: "SET_USER_AVATAR", payload: { avatar } });
           setModalVisibility(false);
           resetForm();
         })

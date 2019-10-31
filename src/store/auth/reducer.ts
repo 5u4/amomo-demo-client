@@ -26,7 +26,11 @@ const setUserAvatar: ActionFunction = (draft, { avatar }) => {
 };
 
 const logout: ActionFunction = draft => {
-  draft = {};
+  draft.id = undefined;
+  draft.username = undefined;
+  draft.email = undefined;
+  draft.token = undefined;
+  draft.avatar = undefined;
 };
 
 export const authCases: AuthCases = {

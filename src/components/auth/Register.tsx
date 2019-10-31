@@ -39,9 +39,10 @@ export const Register: React.FC = () => {
             return;
           }
 
-          const { id, username, email, token } = res.data.register;
+          const { id, username, email, token, avatar } = res.data.register;
           dispatch({ type: "SET_USER", payload: { id, username, email } });
           token && dispatch({ type: "SET_TOKEN", payload: { token } });
+          avatar && dispatch({ type: "SET_USER_AVATAR", payload: { avatar } });
           setModalVisibility(false);
           resetForm();
         })
