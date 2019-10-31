@@ -130,6 +130,13 @@ img {
   @apply rounded-lg bg-white p-4 shadow-lg flex flex-col flex-wrap items-center justify-center;
 }
 
+.topic-selection {
+  @apply m-4;
+  display: grid;
+  grid-template-columns: minmax(50px, 120px) minmax(50px, 120px);
+  grid-gap: 0.5em;
+}
+
 .canvas {
   @apply rounded m-4;
   box-shadow: 0 0 0 6px #a3a3a3;
