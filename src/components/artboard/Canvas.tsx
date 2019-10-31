@@ -141,6 +141,7 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
 
   return (
     <canvas
+      className="canvas"
       width={width || DEFAULT_CANVAS_SIZE}
       height={height || DEFAULT_CANVAS_SIZE}
       ref={canvasRef}

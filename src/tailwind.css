@@ -10,9 +10,13 @@
 
 html,
 body {
-  @apply w-auto h-auto m-0 p-0;
+  @apply w-screen h-screen m-0 p-0;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+#root {
+  @apply w-screen h-screen;
 }
 
 ::-webkit-scrollbar {
@@ -36,7 +40,7 @@ img {
 }
 
 .post-card {
-  @apply bg-white rounded-lg m-1 p-0 flex flex-row flex-wrap border-solid border-gray-200 border-4;
+  @apply bg-white rounded-lg m-1 p-4 flex flex-row flex-wrap border-solid border-gray-200 border-4;
 }
 
 .post-modal {
@@ -106,12 +110,33 @@ img {
   @apply flex flex-row flex-wrap items-center;
 }
 
+/* Avatar */
+
 .absolute-piece {
   @apply absolute inset-0 select-none;
 }
 
 .block-piece {
   @apply inline-block mx-3 align-middle;
+}
+
+/* Artboard */
+
+.artboard-container {
+  @apply w-full h-full p-12 flex flex-col items-center justify-center;
+}
+
+.artboard-card {
+  @apply rounded-lg bg-white p-4 shadow-lg flex flex-col flex-wrap items-center justify-center;
+}
+
+.canvas {
+  @apply rounded m-4;
+  box-shadow: 0 0 0 6px #a3a3a3;
+}
+
+.tool-btn {
+  @apply mx-2;
 }
 
 @screen sm {

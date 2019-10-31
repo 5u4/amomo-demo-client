@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React from "react";
 import { CanvasHandles } from "./Canvas";
 
@@ -11,5 +12,12 @@ export const DownloadButton: React.FC<IProps> = ({ canvasRef }) => {
       canvasRef.current.download();
     }
   };
-  return <button onClick={download}>Download</button>;
+  return (
+    <Button
+      className="tool-btn"
+      icon="cloud-download"
+      shape="circle"
+      onClick={download}
+    />
+  );
 };

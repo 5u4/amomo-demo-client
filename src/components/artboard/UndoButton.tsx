@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import React from "react";
 import { CanvasHandles } from "./Canvas";
 
@@ -11,5 +12,7 @@ export const UndoButton: React.FC<IProps> = ({ canvasRef }) => {
       canvasRef.current.undo();
     }
   };
-  return <button onClick={undo}>Undo</button>;
+  return (
+    <Button className="tool-btn" icon="undo" shape="circle" onClick={undo} />
+  );
 };
