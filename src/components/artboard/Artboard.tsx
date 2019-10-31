@@ -32,8 +32,12 @@ export const Artboard: React.FC = () => {
       <Typography.Text>Select a topic to draw:</Typography.Text>
       <div className="topic-selection">
         {data.randomTopics.map(t => (
-          <Button key={t.id} onClick={() => setTopic(t.name)}>
-            {t.name[0].toUpperCase() + t.name.slice(1)}
+          <Button
+            className="capitalize"
+            key={t.id}
+            onClick={() => setTopic(t.name)}
+          >
+            {t.name}
           </Button>
         ))}
       </div>

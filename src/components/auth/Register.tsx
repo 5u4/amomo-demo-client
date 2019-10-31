@@ -103,9 +103,10 @@ export const Register: React.FC = () => {
 
   return (
     <>
-      <div className="menu-dropdown" onClick={() => setModalVisibility(true)}>
-        Register
-      </div>
+      {/* eslint-disable-next-line */}
+      <a onClick={() => setModalVisibility(true)}>
+        <span className="menu-dropdown">Register</span>
+      </a>
       <Modal
         closable={false}
         footer={null}

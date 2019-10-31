@@ -89,9 +89,10 @@ export const Login: React.FC = () => {
 
   return (
     <>
-      <div className="menu-dropdown" onClick={() => setModalVisibility(true)}>
-        Login
-      </div>
+      {/* eslint-disable-next-line */}
+      <a onClick={() => setModalVisibility(true)}>
+        <span className="menu-dropdown">Login</span>
+      </a>
       <Modal
         closable={false}
         footer={null}

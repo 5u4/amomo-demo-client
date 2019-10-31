@@ -12,8 +12,9 @@ export const Logout: React.FC = () => {
   };
 
   return (
-    <div className="menu-dropdown" onClick={onClick}>
-      Logout
-    </div>
+    /* eslint-disable-next-line */
+    <a onClick={onClick}>
+      <span className="menu-dropdown">Logout</span>
+    </a>
   );
 };

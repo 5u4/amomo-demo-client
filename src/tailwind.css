@@ -83,7 +83,7 @@ img {
 }
 
 .menu-dropdown {
-  @apply text-base text-gray-700 m-2 antialiased font-light;
+  @apply text-lg text-gray-700 m-2 antialiased font-light;
 }
 
 /* Posts description section */
