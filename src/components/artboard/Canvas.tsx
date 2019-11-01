@@ -1,3 +1,4 @@
+import { ExecutionResult } from "graphql";
 import React, {
   Dispatch,
   forwardRef,
@@ -8,6 +9,8 @@ import React, {
   useRef,
 } from "react";
 import { useDispatch } from "react-redux";
+import { useCreatePostMutation } from "../../graphql/post";
+import { Mutation } from "../../graphql/types";
 import { IAction } from "../../hooks/createImmerReducer";
 import { useEventListener } from "../../hooks/useEventListener";
 import { ArtboardAction, IArtboardPayload } from "../../store/artboard/types";
@@ -15,12 +18,14 @@ import { ArtboardAction, IArtboardPayload } from "../../store/artboard/types";
 interface IProps {
   width?: number;
   height?: number;
+  topic: string;
 }
 
 export interface CanvasHandles {
   download: () => void;
   undo: () => void;
   clear: () => void;
+  createPost: () => Promise<ExecutionResult<Mutation>> | undefined;
 }
 
 const DEFAULT_LINE_WIDTH = 10;
@@ -28,12 +33,13 @@ const DEFAULT_LINE_CAP = "round";
 const DEFAULT_CANVAS_SIZE = 450;
 
 const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
-  { width, height },
+  { width, height, topic },
   ref
 ) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | undefined>();
   const canvasRectRef = useRef<ClientRect | DOMRect | null>(null);
+  const [createPostMutation] = useCreatePostMutation();
 
   const dispatch = useDispatch<
     Dispatch<IAction<ArtboardAction, IArtboardPayload>>
@@ -107,16 +113,16 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
   useEventListener(canvasRef, "mouseleave", stopDrawing);
 
   /** Imperative handlers */
-  const download = () => {
+  const download = useCallback(() => {
     if (!canvasRef.current) {
       return;
     }
 
     const link = document.createElement("a");
-    link.download = "artboard.jpg"; // TODO: Use dynamic name
+    link.download = `${topic}.jpg`;
     link.href = canvasRef.current.toDataURL("image/jpeg");
     link.click();
-  };
+  }, [topic]);
 
   const undo = useCallback(
     () => dispatch({ type: "UNDO", payload: { ctx: ctxRef.current } }),
@@ -128,6 +134,18 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     [dispatch]
   );
 
+  const createPost = useCallback(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+
+    const data = canvasRef.current
+      .toDataURL("image/jpeg")
+      .replace("data:image/jpeg;base64,", "");
+
+    return createPostMutation({ variables: { input: { data, topic } } });
+  }, [canvasRef, createPostMutation, topic]);
+
   /** Handle imperative functions */
   useImperativeHandle(
     ref,
@@ -135,8 +153,9 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
       download,
       undo,
       clear,
+      createPost,
     }),
-    [undo, clear]
+    [undo, clear, createPost, download]
   );
 
   return (
