@@ -1,4 +1,4 @@
-import { Button, Result, Tooltip, Typography } from "antd";
+import { Button, Popconfirm, Result, Tooltip, Typography } from "antd";
 import React, { useRef, useState } from "react";
 import { useRandomTopicsQuery } from "../../graphql/topic";
 import { Canvas, CanvasHandles } from "./Canvas";
@@ -42,6 +42,32 @@ export const Artboard: React.FC = () => {
     </Button>
   );
 
+  const ReselectButton = (
+    <Popconfirm
+      title="Choose another topic will clear your current drawing"
+      okText="Clear and choose another topic"
+      cancelText="Continue drawing"
+      onConfirm={() => setTopic(undefined)}
+    >
+      <Tooltip title="Choose another topic" placement="bottom">
+        <Button icon="swap" shape="circle" className="tool-btn" />
+      </Tooltip>
+    </Popconfirm>
+  );
+
+  const BackButton = (
+    <Popconfirm
+      title="Back to index will clear your current drawing"
+      okText="Back to index"
+      cancelText="Continue drawing"
+      onConfirm={() => (window.location.href = "/")}
+    >
+      <Tooltip title="Back to index" placement="bottom">
+        <Button icon="close" shape="circle" className="tool-btn" />
+      </Tooltip>
+    </Popconfirm>
+  );
+
   const size = Math.min(
     Math.min(window.screen.height, window.screen.width) * 0.7,
     450
@@ -56,7 +82,10 @@ export const Artboard: React.FC = () => {
           <Button onClick={() => (window.location.href = "/")}>
             Go To Main Page
           </Button>,
-          <Button onClick={() => (window.location.href = "draw")}>
+          <Button
+            onClick={() => (window.location.href = "draw")}
+            type="primary"
+          >
             Draw a new one
           </Button>,
         ]}
@@ -74,9 +103,13 @@ export const Artboard: React.FC = () => {
       </Typography.Text>
       <Canvas width={size} height={size} ref={canvasRef} topic={topic!} />
       <div>
-        <DownloadButton canvasRef={canvasRef} />
         <UndoButton canvasRef={canvasRef} />
         <ClearButton canvasRef={canvasRef} />
+      </div>
+      <div>
+        <DownloadButton canvasRef={canvasRef} />
+        {ReselectButton}
+        {BackButton}
         {CreatePostButton}
       </div>
     </div>
