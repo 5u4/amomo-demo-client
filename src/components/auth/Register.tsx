@@ -6,6 +6,7 @@ import { useRegisterMutation } from "../../graphql/auth";
 import { useAuthDispatch } from "../../store/auth";
 import { useAvatarSelector } from "../../store/avatar";
 import { email, password, username } from "../../validators/auth";
+import { AvatarBuilder } from "../avatar/AvatarBuilder";
 import { PasswordFormField } from "../form/PasswordFormField";
 import { TextFormField } from "../form/TextFormField";
 
@@ -32,8 +33,7 @@ export const Register: React.FC = () => {
     (values: IFormValue, formikActions: FormikActions<IFormValue>) => void
   >(
     (values, { resetForm }) => {
-      const payload = { ...values, avatar };
-      register({ variables: { payload } })
+      register({ variables: { payload: values, avatar } })
         .then(res => {
           if (!res.data || !res.data.register) {
             return;
@@ -69,6 +69,7 @@ export const Register: React.FC = () => {
       {() => (
         <Form>
           <Typography.Title level={2}>Register</Typography.Title>
+          <AvatarBuilder />
           <Field
             label="Username"
             name="username"

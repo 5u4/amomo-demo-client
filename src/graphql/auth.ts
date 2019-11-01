@@ -42,8 +42,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 const REGISTER_MUTATION = gql`
-  mutation($payload: RegisterInput!) {
-    register(payload: $payload) {
+  mutation($payload: RegisterInput!, $avatar: AvatarInput!) {
+    register(payload: $payload, avatar: $avatar) {
       id
       email
       username
