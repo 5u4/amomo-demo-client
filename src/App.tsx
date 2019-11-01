@@ -4,6 +4,7 @@ import { Artboard } from "./components/artboard/Artboard";
 import { SetAccessToken } from "./components/auth/SetAccessToken";
 import { AppMenu } from "./components/control/AppMenu";
 import { DrawButton } from "./components/control/DrawButton";
+import { Logo } from "./components/control/Logo";
 import { Posts } from "./components/post/Posts";
 
 export const App: React.FC = () => {
@@ -13,6 +14,7 @@ export const App: React.FC = () => {
     <>
       <AppMenu />
       <DrawButton />
+      <Logo />
       <Route path="/">
         <Posts />
       </Route>
