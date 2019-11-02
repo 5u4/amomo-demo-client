@@ -26,9 +26,18 @@ interface IProps {
   dataUrl: string;
   postedBy?: User | null;
   solution?: string | null;
+  setUserInfoPanelOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setViewingUserData: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 
-export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
+export const Post: React.FC<IProps> = ({
+  id,
+  dataUrl,
+  postedBy,
+  solution,
+  setUserInfoPanelOpen,
+  setViewingUserData,
+}) => {
   const [modalVisible, setModalVisibility] = useState(false);
   const [guessState, setGuessState] = usePostGuessState(id, solution);
   const [answer] = useAnswerMutation();
@@ -126,58 +135,79 @@ export const Post: React.FC<IProps> = ({ id, dataUrl, postedBy, solution }) => {
       ? "post-modal-incorrect post-modal"
       : "post-modal";
 
+  const onClickUserInfo: any = (e: Event) => {
+    if (!postedBy) {
+      return;
+    }
+    e.stopPropagation();
+    setUserInfoPanelOpen(true);
+    setViewingUserData(postedBy);
+  };
+
+  const PostCard = (
+    <Card
+      className={cardClassName}
+      hoverable
+      bodyStyle={{ padding: 16 }}
+      onClick={() => setModalVisibility(true)}
+      cover={
+        <img
+          src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
+          alt="Post"
+          draggable={false}
+        />
+      }
+    >
+      <div className="description-container">
+        <div onClick={onClickUserInfo}>{avatar}</div>
+        <div onClick={onClickUserInfo}>{text}</div>
+      </div>
+    </Card>
+  );
+
+  const PostModalContent = (
+    <Card
+      bordered={false}
+      bodyStyle={{ padding: 12 }}
+      cover={
+        <img
+          src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
+          alt="Post"
+          draggable={false}
+        />
+      }
+    >
+      {guessState === "correct" ? (
+        <Alert
+          message={`You got ${solution ||
+            guessSolution ||
+            getPostGuessState(id)} correctly!`}
+          type="success"
+          showIcon
+        />
+      ) : (
+        guessInputForm
+      )}
+    </Card>
+  );
+
+  const PostModal = (
+    <Modal
+      visible={modalVisible}
+      closable={false}
+      footer={null}
+      className={modalClassName}
+      onCancel={() => setModalVisibility(false)}
+      bodyStyle={{ padding: 12 }}
+    >
+      {PostModalContent}
+    </Modal>
+  );
+
   return (
     <>
-      <Card
-        className={cardClassName}
-        hoverable
-        bodyStyle={{ padding: 16 }}
-        onClick={() => setModalVisibility(true)}
-        cover={
-          <img
-            src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
-            alt="Post"
-            draggable={false}
-          />
-        }
-      >
-        <div className="description-container">
-          {avatar}
-          {text}
-        </div>
-      </Card>
-      <Modal
-        visible={modalVisible}
-        closable={false}
-        footer={null}
-        className={modalClassName}
-        onCancel={() => setModalVisibility(false)}
-        bodyStyle={{ padding: 12 }}
-      >
-        <Card
-          bordered={false}
-          bodyStyle={{ padding: 12 }}
-          cover={
-            <img
-              src={process.env.REACT_APP_SERVER_BASE_URL + dataUrl}
-              alt="Post"
-              draggable={false}
-            />
-          }
-        >
-          {guessState === "correct" ? (
-            <Alert
-              message={`You got ${solution ||
-                guessSolution ||
-                getPostGuessState(id)} correctly!`}
-              type="success"
-              showIcon
-            />
-          ) : (
-            guessInputForm
-          )}
-        </Card>
-      </Modal>
+      {PostCard}
+      {PostModal}
     </>
   );
 };

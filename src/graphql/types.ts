@@ -83,6 +83,11 @@ export type Post = {
   postedBy?: Maybe<User>,
 };
 
+export type PostFilterInput = {
+  before?: Maybe<Scalars['Int']>,
+  postedByUserId?: Maybe<Scalars['String']>,
+};
+
 export type Query = {
    __typename?: 'Query',
   me?: Maybe<User>,
@@ -93,6 +98,7 @@ export type Query = {
 
 
 export type QueryPostsArgs = {
+  filter?: Maybe<PostFilterInput>,
   pagination?: Maybe<PaginationInput>
 };
 

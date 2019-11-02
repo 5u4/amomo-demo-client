@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import {
   Mutation,
@@ -14,6 +14,7 @@ const POSTS_QUERY = gql`
       id
       dataUrl
       postedBy {
+        id
         username
         avatar {
           layout
@@ -45,6 +46,17 @@ const CREATE_POST_MUTATION = gql`
     }
   }
 `;
+// TODO: Merge query with posts query
+const USER_POSTS_QUERY = gql`
+  query($pagination: PaginationInput, $filter: PostFilterInput) {
+    posts(pagination: $pagination, filter: $filter) {
+      id
+      dataUrl
+      answer
+      createdAt
+    }
+  }
+`;
 
 export const usePostsQuery = (variables?: QueryPostsArgs) =>
   useQuery<Query, QueryPostsArgs>(POSTS_QUERY, { variables });
@@ -54,3 +66,5 @@ export const useCreatePostMutation = (variables?: MutationCreatePostArgs) =>
   useMutation<Mutation, MutationCreatePostArgs>(CREATE_POST_MUTATION, {
     variables,
   });
+export const useUserPostsLazyQuery = (variables?: QueryPostsArgs) =>
+  useLazyQuery<Query, QueryPostsArgs>(USER_POSTS_QUERY, { variables });

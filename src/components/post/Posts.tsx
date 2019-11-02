@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePostsQuery } from "../../graphql/post";
+import { User } from "../../graphql/types";
+import { UserInfoPanel } from "../user/UserInfoPanel";
 import { Post } from "./Post";
 
 export const Posts: React.FC = () => {
+  const [isUserInfoPanelOpen, setUserInfoPanelOpen] = useState(false);
+  const [viewingUserData, setViewingUserData] = useState<User | undefined>(
+    undefined
+  );
   const { data } = usePostsQuery();
 
   if (!data) {
@@ -11,6 +17,11 @@ export const Posts: React.FC = () => {
 
   return (
     <ul className="posts-container">
+      <UserInfoPanel
+        viewingUserData={viewingUserData}
+        isUserInfoPanelOpen={isUserInfoPanelOpen}
+        setUserInfoPanelOpen={setUserInfoPanelOpen}
+      />
       {data.posts.map(post => (
         <li key={post.id}>
           <Post
@@ -18,6 +29,8 @@ export const Posts: React.FC = () => {
             dataUrl={post.dataUrl}
             postedBy={post.postedBy}
             solution={post.answer}
+            setUserInfoPanelOpen={setUserInfoPanelOpen}
+            setViewingUserData={setViewingUserData}
           />
         </li>
       ))}
