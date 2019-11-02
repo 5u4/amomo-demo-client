@@ -82,10 +82,11 @@ export const Artboard: React.FC = () => {
         status="success"
         title={`Successfully published your ${topic}!`}
         extra={[
-          <Button onClick={() => (window.location.href = "/")}>
+          <Button key="main" onClick={() => (window.location.href = "/")}>
             Go To Main Page
           </Button>,
           <Button
+            key="new"
             onClick={() => (window.location.href = "draw")}
             type="primary"
           >
