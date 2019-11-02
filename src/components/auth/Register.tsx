@@ -45,6 +45,7 @@ export const Register: React.FC = () => {
           avatar && dispatch({ type: "SET_USER_AVATAR", payload: { avatar } });
           setModalVisibility(false);
           resetForm();
+          window.location.reload();
         })
         .catch(err => {}); // TODO: Handle register failure
     },

@@ -8,7 +8,7 @@ export const Logout: React.FC = () => {
 
   const onClick = () => {
     dispatch({ type: "LOGOUT" });
-    logout();
+    logout().then(() => window.location.reload());
   };
 
   return (
