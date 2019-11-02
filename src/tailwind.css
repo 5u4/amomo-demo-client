@@ -47,6 +47,18 @@ img {
   @apply bg-white rounded-lg p-0 border-solid border-gray-200 border-4;
 }
 
+.self-post-card {
+  @apply border-blue-300;
+}
+
+.self-post-card:hover {
+  @apply border-blue-400;
+}
+
+.self-post-modal {
+  @apply border-blue-300;
+}
+
 .post-card-correct {
   @apply border-green-300;
 }

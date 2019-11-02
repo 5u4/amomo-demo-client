@@ -121,19 +121,23 @@ export const Post: React.FC<IProps> = ({
     </Formik>
   );
 
-  const cardClassName =
-    guessState === "correct"
-      ? "post-card-correct post-card"
-      : guessState === "incorrect"
-      ? "post-card-incorrect post-card"
-      : "post-card";
+  const isSelfPost = postedBy && postedBy.id === auth.id;
 
-  const modalClassName =
-    guessState === "correct"
-      ? "post-modal-correct post-modal"
-      : guessState === "incorrect"
-      ? "post-modal-incorrect post-modal"
-      : "post-modal";
+  const cardClassName = isSelfPost
+    ? "self-post-card post-card"
+    : guessState === "correct"
+    ? "post-card-correct post-card"
+    : guessState === "incorrect"
+    ? "post-card-incorrect post-card"
+    : "post-card";
+
+  const modalClassName = isSelfPost
+    ? "self-post-modal post-modal"
+    : guessState === "correct"
+    ? "post-modal-correct post-modal"
+    : guessState === "incorrect"
+    ? "post-modal-incorrect post-modal"
+    : "post-modal";
 
   const onClickUserInfo: any = (e: Event) => {
     if (!postedBy) {
@@ -177,7 +181,15 @@ export const Post: React.FC<IProps> = ({
         />
       }
     >
-      {guessState === "correct" ? (
+      {isSelfPost ? (
+        <Alert
+          message={`You drew this ${solution ||
+            guessSolution ||
+            getPostGuessState(id)}!`}
+          type="info"
+          showIcon
+        />
+      ) : guessState === "correct" ? (
         <Alert
           message={`You got ${solution ||
             guessSolution ||
