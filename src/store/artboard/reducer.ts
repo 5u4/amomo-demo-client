@@ -44,6 +44,17 @@ const mouseOutOfCanvas: ActionFunction = (draft, { x, y, ctx }) => {
   draft.points.push({ x, y, mode: "end" });
 };
 
+const touchStopDrawing: ActionFunction = (draft, { ctx }) => {
+  if (!ctx) {
+    return;
+  }
+  const { x, y } = draft.points[draft.points.length - 1];
+  draft.painting = false;
+  stroke(x, y, ctx);
+  ctx.beginPath();
+  draft.points.push({ x, y, mode: "end" });
+};
+
 const redraw: ActionFunction = (draft, { ctx }) => {
   if (!ctx) {
     return;
@@ -93,6 +104,7 @@ export const artboardCases: ArtboardCases = {
   START_DRAWING: startDrawing,
   STOP_DRAWING: stopDrawing,
   MOUSE_MOVE_OUT_OF_CANVAS: mouseOutOfCanvas,
+  STOP_TOUCH_DRAWING: touchStopDrawing,
   UNDO: undo,
   CLEAR: clear,
 };

@@ -139,6 +139,7 @@ img {
 
 .canvas {
   @apply rounded m-4;
+  touch-action: none;
   box-shadow: 0 0 0 6px #a3a3a3;
 }
 

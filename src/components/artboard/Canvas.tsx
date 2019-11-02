@@ -76,12 +76,25 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
   /** Drawing functions */
   const makeDrawingPayload = useCallback(
     (e: MouseEvent): IArtboardPayload => {
-      if (!canvasRectRef.current) {
+      if (!canvasRectRef.current || !ctxRef.current) {
         return {};
       }
 
-      const x = e.clientX - canvasRectRef.current.left;
-      const y = e.clientY - canvasRectRef.current.top;
+      let x: number;
+      let y: number;
+
+      const offsetX =
+        canvasRectRef.current.left - document.documentElement.scrollLeft;
+      const offsetY =
+        canvasRectRef.current.top - document.documentElement.scrollTop;
+
+      if (window.TouchEvent && e instanceof TouchEvent) {
+        x = e.touches[0].clientX - offsetX;
+        y = e.touches[0].clientY - offsetY;
+      } else {
+        x = e.clientX - offsetX;
+        y = e.clientY - offsetY;
+      }
 
       return { x, y, ctx: ctxRef.current };
     },
@@ -115,11 +128,24 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     [dispatch, makeDrawingPayload]
   );
 
+  const stopTouchDrawing = useCallback(
+    () =>
+      dispatch({
+        type: "STOP_TOUCH_DRAWING",
+        payload: { ctx: ctxRef.current },
+      }),
+    [dispatch]
+  );
+
   /** Register drawing events */
   useEventListener(canvasRef, "mousedown", startDrawing);
   useEventListener(canvasRef, "mousemove", draw);
   useEventListener(canvasRef, "mouseup", stopDrawing);
   useEventListener(canvasRef, "mouseleave", moveOutOfCanvas);
+
+  useEventListener(canvasRef, "touchstart", startDrawing);
+  useEventListener(canvasRef, "touchmove", draw);
+  useEventListener(canvasRef, "touchend", stopTouchDrawing);
 
   /** Imperative handlers */
   const download = useCallback(() => {

@@ -23,6 +23,7 @@ export type ArtboardAction =
   | "DRAW"
   | "STOP_DRAWING"
   | "MOUSE_MOVE_OUT_OF_CANVAS"
+  | "STOP_TOUCH_DRAWING"
   | "UNDO"
   | "CLEAR";
 
