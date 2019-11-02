@@ -47,9 +47,12 @@ export const Artboard: React.FC = () => {
       title="Choose another topic will clear your current drawing"
       okText="Clear and choose another topic"
       cancelText="Continue drawing"
-      onConfirm={() => setTopic(undefined)}
+      onConfirm={() => {
+        setTopic(undefined);
+        canvasRef.current && canvasRef.current.clear();
+      }}
     >
-      <Tooltip title="Choose another topic" placement="bottom">
+      <Tooltip title="Switch Topic" placement="bottom">
         <Button icon="swap" shape="circle" className="tool-btn" />
       </Tooltip>
     </Popconfirm>
