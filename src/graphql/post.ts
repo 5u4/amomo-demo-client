@@ -9,8 +9,8 @@ import {
 } from "./types";
 
 const POSTS_QUERY = gql`
-  query($pagination: PaginationInput) {
-    posts(pagination: $pagination) {
+  query($pagination: PaginationInput, $filter: PostFilterInput) {
+    posts(pagination: $pagination, filter: $filter) {
       id
       dataUrl
       postedBy {
