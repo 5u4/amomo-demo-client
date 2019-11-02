@@ -6,12 +6,14 @@ export interface IPoint {
   y: number;
   mode: "begin" | "draw" | "end";
   color: string;
+  width: number;
 }
 
 export interface IArtboardState {
   painting: boolean;
   points: IPoint[];
   color: string;
+  width: number;
 }
 
 export interface IArtboardPayload {
@@ -19,6 +21,7 @@ export interface IArtboardPayload {
   x?: number;
   y?: number;
   color?: string;
+  width?: number;
 }
 
 export type ArtboardAction =
@@ -28,6 +31,7 @@ export type ArtboardAction =
   | "MOUSE_MOVE_OUT_OF_CANVAS"
   | "STOP_TOUCH_DRAWING"
   | "SWITCH_COLOR"
+  | "SWITCH_LINE_WIDTH"
   | "UNDO"
   | "CLEAR";
 

@@ -4,9 +4,11 @@ const stroke = (
   x: number,
   y: number,
   ctx: CanvasRenderingContext2D,
-  color: string
+  color: string,
+  width: number
 ) => {
   ctx.strokeStyle = color;
+  ctx.lineWidth = width;
   ctx.lineTo(x, y);
   ctx.stroke();
   ctx.beginPath();
@@ -17,9 +19,9 @@ const draw: ActionFunction = (draft, { x, y, ctx }) => {
   if (!ctx || !draft.painting || !x || !y) {
     return;
   }
-  const { color } = draft;
-  stroke(x, y, ctx, color);
-  draft.points.push({ x, y, mode: "draw", color });
+  const { color, width } = draft;
+  stroke(x, y, ctx, color, width);
+  draft.points.push({ x, y, mode: "draw", color, width });
 };
 
 const startDrawing: ActionFunction = (draft, payload) => {
@@ -27,9 +29,9 @@ const startDrawing: ActionFunction = (draft, payload) => {
   if (!x || !y || !ctx) {
     return;
   }
-  const { color } = draft;
+  const { color, width } = draft;
   draft.painting = true;
-  draft.points.push({ x, y, mode: "begin", color });
+  draft.points.push({ x, y, mode: "begin", color, width });
   draw(draft, payload);
 };
 
@@ -37,21 +39,21 @@ const stopDrawing: ActionFunction = (draft, { x, y, ctx }) => {
   if (!ctx || !x || !y) {
     return;
   }
-  const { color } = draft;
+  const { color, width } = draft;
   draft.painting = false;
-  stroke(x, y, ctx, color);
+  stroke(x, y, ctx, color, width);
   ctx.beginPath();
-  draft.points.push({ x, y, mode: "end", color });
+  draft.points.push({ x, y, mode: "end", color, width });
 };
 
 const mouseOutOfCanvas: ActionFunction = (draft, { x, y, ctx }) => {
   if (!ctx || !x || !y) {
     return;
   }
-  const { color } = draft;
+  const { color, width } = draft;
   draft.painting = false;
   ctx.beginPath();
-  draft.points.push({ x, y, mode: "end", color });
+  draft.points.push({ x, y, mode: "end", color, width });
 };
 
 const touchStopDrawing: ActionFunction = (draft, { ctx }) => {
@@ -59,11 +61,11 @@ const touchStopDrawing: ActionFunction = (draft, { ctx }) => {
     return;
   }
   const { x, y } = draft.points[draft.points.length - 1];
-  const { color } = draft;
+  const { color, width } = draft;
   draft.painting = false;
-  stroke(x, y, ctx, color);
+  stroke(x, y, ctx, color, width);
   ctx.beginPath();
-  draft.points.push({ x, y, mode: "end", color });
+  draft.points.push({ x, y, mode: "end", color, width });
 };
 
 const redraw: ActionFunction = (draft, { ctx }) => {
@@ -79,7 +81,7 @@ const redraw: ActionFunction = (draft, { ctx }) => {
       continue;
     }
 
-    stroke(point.x, point.y, ctx, point.color);
+    stroke(point.x, point.y, ctx, point.color, point.width);
   }
 };
 
@@ -89,6 +91,14 @@ const switchColor: ActionFunction = (draft, { color }) => {
   }
 
   draft.color = color;
+};
+
+const switchLineWidth: ActionFunction = (draft, { width }) => {
+  if (!width) {
+    return;
+  }
+
+  draft.width = width;
 };
 
 const undo: ActionFunction = (draft, payload) => {
@@ -125,6 +135,7 @@ export const artboardCases: ArtboardCases = {
   MOUSE_MOVE_OUT_OF_CANVAS: mouseOutOfCanvas,
   STOP_TOUCH_DRAWING: touchStopDrawing,
   SWITCH_COLOR: switchColor,
+  SWITCH_LINE_WIDTH: switchLineWidth,
   UNDO: undo,
   CLEAR: clear,
 };

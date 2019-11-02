@@ -4,4 +4,5 @@ export const artboardState: IArtboardState = {
   painting: false,
   points: [],
   color: "#1a202c",
+  width: 10,
 };

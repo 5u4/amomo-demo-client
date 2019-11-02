@@ -1,6 +1,7 @@
 import { Button, Popconfirm, Result, Tooltip, Typography } from "antd";
 import React, { useRef, useState } from "react";
 import { useRandomTopicsQuery } from "../../graphql/topic";
+import { BrushSlider } from "./BrushSlider";
 import { Canvas, CanvasHandles } from "./Canvas";
 import { ClearButton } from "./ClearButton";
 import { ColorPanel } from "./ColorPanel";
@@ -113,6 +114,7 @@ export const Artboard: React.FC = () => {
         <ClearButton canvasRef={canvasRef} />
       </div>
       <div>
+        <BrushSlider canvasRef={canvasRef} />
         <DownloadButton canvasRef={canvasRef} />
         {ReselectButton}
         {BackButton}
