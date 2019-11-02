@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useRandomTopicsQuery } from "../../graphql/topic";
 import { Canvas, CanvasHandles } from "./Canvas";
 import { ClearButton } from "./ClearButton";
+import { ColorPanel } from "./ColorPanel";
 import { DownloadButton } from "./DownloadButton";
 import { UndoButton } from "./UndoButton";
 
@@ -106,7 +107,8 @@ export const Artboard: React.FC = () => {
         </Typography.Text>
       </Typography.Text>
       <Canvas width={size} height={size} ref={canvasRef} topic={topic!} />
-      <div>
+      <div className="flex">
+        <ColorPanel canvasRef={canvasRef} />
         <UndoButton canvasRef={canvasRef} />
         <ClearButton canvasRef={canvasRef} />
       </div>

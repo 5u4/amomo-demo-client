@@ -5,17 +5,20 @@ export interface IPoint {
   x: number;
   y: number;
   mode: "begin" | "draw" | "end";
+  color: string;
 }
 
 export interface IArtboardState {
   painting: boolean;
   points: IPoint[];
+  color: string;
 }
 
 export interface IArtboardPayload {
   ctx?: CanvasRenderingContext2D;
   x?: number;
   y?: number;
+  color?: string;
 }
 
 export type ArtboardAction =
@@ -24,6 +27,7 @@ export type ArtboardAction =
   | "STOP_DRAWING"
   | "MOUSE_MOVE_OUT_OF_CANVAS"
   | "STOP_TOUCH_DRAWING"
+  | "SWITCH_COLOR"
   | "UNDO"
   | "CLEAR";
 

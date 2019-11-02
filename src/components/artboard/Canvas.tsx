@@ -26,6 +26,7 @@ export interface CanvasHandles {
   undo: () => void;
   clear: () => void;
   createPost: () => Promise<ExecutionResult<Mutation>> | undefined;
+  changeColor: (color: string) => void;
 }
 
 const DEFAULT_LINE_WIDTH = 10;
@@ -169,6 +170,11 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     [dispatch]
   );
 
+  const changeColor = useCallback(
+    (color: string) => dispatch({ type: "SWITCH_COLOR", payload: { color } }),
+    [dispatch]
+  );
+
   const createPost = useCallback(() => {
     if (!canvasRef.current) {
       return;
@@ -189,8 +195,9 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
       undo,
       clear,
       createPost,
+      changeColor,
     }),
-    [undo, clear, createPost, download]
+    [undo, clear, createPost, download, changeColor]
   );
 
   return (
