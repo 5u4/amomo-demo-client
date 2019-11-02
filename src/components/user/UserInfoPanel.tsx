@@ -11,6 +11,7 @@ interface IProps {
 }
 
 const DEFAULT_DRAWER_MAX_WIDTH = 480;
+const POSTS_LIMIT = 50;
 
 export const UserInfoPanel: React.FC<IProps> = ({
   isUserInfoPanelOpen,
@@ -20,7 +21,9 @@ export const UserInfoPanel: React.FC<IProps> = ({
   const [currentUserId, setCurrentUserId] = useState<string | undefined>(
     undefined
   );
-  const [getUserPosts, { data }] = useUserPostsLazyQuery();
+  const [getUserPosts, { data }] = useUserPostsLazyQuery({
+    pagination: { limit: POSTS_LIMIT },
+  });
 
   useEffect(() => {
     if (!isUserInfoPanelOpen || !viewingUserData) {
@@ -74,6 +77,9 @@ export const UserInfoPanel: React.FC<IProps> = ({
       visible={isUserInfoPanelOpen}
     >
       {drawerContent}
+      <Typography.Text className="block text-center" type="secondary">
+        Only the first {POSTS_LIMIT} posts are available to view right now
+      </Typography.Text>
     </Drawer>
   );
 };
