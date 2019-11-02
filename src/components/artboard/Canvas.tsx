@@ -106,11 +106,20 @@ const ForwardingCanvas: React.RefForwardingComponent<CanvasHandles, IProps> = (
     [dispatch, makeDrawingPayload]
   );
 
+  const moveOutOfCanvas = useCallback(
+    (e: MouseEvent) =>
+      dispatch({
+        type: "MOUSE_MOVE_OUT_OF_CANVAS",
+        payload: makeDrawingPayload(e),
+      }),
+    [dispatch, makeDrawingPayload]
+  );
+
   /** Register drawing events */
   useEventListener(canvasRef, "mousedown", startDrawing);
   useEventListener(canvasRef, "mousemove", draw);
   useEventListener(canvasRef, "mouseup", stopDrawing);
-  useEventListener(canvasRef, "mouseleave", stopDrawing);
+  useEventListener(canvasRef, "mouseleave", moveOutOfCanvas);
 
   /** Imperative handlers */
   const download = useCallback(() => {
