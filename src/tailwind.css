@@ -123,7 +123,7 @@ img {
 /* Artboard */
 
 .artboard-container {
-  @apply w-full h-full p-12 flex flex-col items-center justify-center;
+  @apply w-full p-12 flex flex-col items-center justify-center;
 }
 
 .artboard-card {
