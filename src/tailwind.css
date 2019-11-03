@@ -11,6 +11,9 @@
 html,
 body {
   @apply w-screen h-screen m-0 p-0;
+  background-image: url("/img/bg.png");
+  background-size: cover;
+  background-attachment: fixed;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
