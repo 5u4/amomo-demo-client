@@ -9,7 +9,7 @@ export const DrawButton: React.FC = () => {
     <Button
       shape="circle"
       type="primary"
-      icon="highlight"
+      icon="plus"
       size="large"
       onClick={() => (window.location.href = "draw")}
       style={{ position: "fixed", right: 20, bottom: 15, zIndex: 1000 }}

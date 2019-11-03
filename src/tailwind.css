@@ -47,7 +47,8 @@ img {
 }
 
 .post-modal {
-  @apply bg-white rounded-lg p-0 border-solid border-gray-200 border-4;
+  @apply bg-white p-0 border-solid border-gray-200 border-4;
+  border-radius: 8px;
 }
 
 .self-post-card {

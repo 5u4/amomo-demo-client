@@ -152,7 +152,7 @@ export const Post: React.FC<IProps> = ({
     <Card
       className={cardClassName}
       hoverable
-      bodyStyle={{ padding: 16 }}
+      bodyStyle={{ padding: 4 }}
       onClick={() => setModalVisibility(true)}
       cover={
         <img
